@@ -1,4 +1,8 @@
-from bot_instance import client  # Import the client from the new file
+from bot_instance import client
+
+@client.command()
+async def salam(ctx):
+    await ctx.send("As-salamu alaykum.")
 
 @client.command(pass_context=True)
 async def join(ctx):
@@ -10,12 +14,9 @@ async def join(ctx):
 
 @client.command(pass_context=True)
 async def leave(ctx):
-    if ctx.author.voice:
-        await ctx.guild.voice_client.disconnect()
-        await ctx.send("Ma'a salama.")
+    voice_client = ctx.guild.voice_client 
+    if voice_client and voice_client.is_connected(): 
+        await voice_client.disconnect()  
+        await ctx.send("Ma'a salama!")
     else:
-        await ctx.send("Im not in a voice chat Subhanallah.")
-
-@client.command()
-async def salam(ctx):
-    await ctx.send("As-salamu alaykum.")
+        await ctx.send("I'm not in a voice chat, Subhanallah.")
