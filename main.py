@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from tokens import bot_token
+from tokens import *
 
 #client is the bot instance.
 #this tells the bot that the '!' means its getting called
@@ -12,9 +12,13 @@ client = commands.Bot(command_prefix = '!', intents=intents)
 async def on_ready():
     print("I am ready to use") 
 
-#when usere says 
+@client.event
+async def on_member_join(member, intents=intents):
+    channel = client.get_channel(general_chat_id)
+    await channel.send(f"Ah, Welcome to the fold of islam {member} Alhamdulillah!")
+
 @client.command()
-async def akhi(ctx):
+async def Salam(ctx):
     await ctx.send("As-salamu alaykum")
 
 #runs client with a secret token
